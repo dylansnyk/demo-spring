@@ -1,0 +1,28 @@
+language: java
+
+jdk: openjdk11
+
+services:
+  - docker
+
+before_install:
+  - nvm install 14
+  - node --version
+
+install:
+  -  ./mvnw clean install
+  - docker build -t dylansnyk/demo-spring:latest -t dylansnyk/demo-spring:$TRAVIS_BUILD_NUMBER .
+  - npm install -g snyk
+  - snyk test --fail-on=all
+  - snyk code test --fail-on=all
+  - snyk container test dylansnyk/demo-spring:$TRAVIS_BUILD_NUMBER
+  - snyk iac test --severity-threshold=high
+
+deploy:
+  provider: script
+  script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin; docker push dylansnyk/demo-spring:$TRAVIS_BUILD_NUMBER; docker push dylansnyk/demo-spring:latest
+  on:
+    branch: develop
+
+after_deploy:
+  - snyk monitor
