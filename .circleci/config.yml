@@ -14,9 +14,8 @@ jobs:
           command: mvn test
   snyk:
     docker:
-      - image: cimg/openjdk:11.0-browsers
+      - image: cimg/openjdk:11.0-node
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - setup_remote_docker:
           version: 20.10.7
