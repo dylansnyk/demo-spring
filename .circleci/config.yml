@@ -14,12 +14,15 @@ jobs:
           command: mvn test
   snyk:
     docker:
-      - image: cimg/node:17.1.0
+      - image: cimg/openjdk:11.0-browsers
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - setup_remote_docker:
           version: 20.10.7
-      - run: node --version
+      - run: |
+          node --version
+          java --version
       - run:
           name: Build Docker image
           command: docker build -t dylansnyk/demo-spring:latest -t dylansnyk/demo-spring:$CIRCLE_SHA1 .
