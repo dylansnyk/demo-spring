@@ -25,7 +25,7 @@ jobs:
           command: docker build -t dylansnyk/demo-spring:latest -t dylansnyk/demo-spring:$CIRCLE_SHA1 .
       - run:
           name: Install Snyk
-          command: npm install -g snyk
+          command: npm install --prefix=$HOME/.local -g snyk
       - run:
           name: Snyk Open Source
           command: snyk test --severity-threshold=high
