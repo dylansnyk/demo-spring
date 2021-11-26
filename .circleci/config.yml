@@ -17,6 +17,8 @@ jobs:
       - image: cimg/node:17.1.0
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 20.10.7
       - run: node --version
       - run:
           name: Build Docker image
