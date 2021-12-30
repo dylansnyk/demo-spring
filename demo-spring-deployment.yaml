@@ -1,7 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: test01
   name: demo-spring
+  annotations:
+    orgs.k8s.snyk.io/v1: e4f1aaec-ce69-479f-987c-5bed92f7b1a8
   labels:
     app: demo-spring
 spec:
@@ -23,6 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: test01
   name: demo-spring-service
 spec:
   selector:
@@ -32,4 +36,4 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 30001
+      nodePort: 30003
