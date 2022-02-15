@@ -1,0 +1,19 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.22.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-2326698:
+    - '*':
+        reason: None Given
+        expires: 2022-03-05T16:30:17.009Z
+        created: 2022-02-03T16:30:17.012Z
+  'snyk:lic:maven:ch.qos.logback:logback-classic:EPL-1.0_OR_LGPL-2.1':
+    - '*':
+        reason: None Given
+        expires: 2022-03-05T23:12:45.406Z
+        created: 2022-02-03T23:12:45.415Z
+patch: {}
+
+exclude:
+  code:
+    - ./.mvn/**
