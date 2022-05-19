@@ -16,4 +16,4 @@ patch: {}
 
 exclude:
   code:
-    - ./.mvn/**
+    - .mvn/**
