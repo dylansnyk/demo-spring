@@ -11,18 +11,19 @@ jobs:
       - uses: actions/checkout@master
       
       - name: Download snyk-to-html
-      - run: |
+        shell: bash
+        run: |
           curl -Lo ./snyk-to-html \
           chmod +x snyk-to-html
-      
+          
       - uses: snyk/actions/setup@master
       - name: Run Snyk Code to check for vulnerabilities
         run: snyk code test --sarif | ./snyk-to-html -o results.html
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           
-      - uses: actions/upload-artifact@v3
       - name: Upload Snyk Code Results
+        uses: actions/upload-artifact@v3
         with:
           name: snyk-code-results
           path: results.html
