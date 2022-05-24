@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@master
       
       - name: Download snyk-to-html
-        run: |
+      - run: |
           curl -Lo ./snyk-to-html \
           chmod +x snyk-to-html
       
