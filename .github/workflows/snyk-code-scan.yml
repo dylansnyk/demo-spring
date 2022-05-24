@@ -13,7 +13,7 @@ jobs:
       - name: Download snyk-to-html
         shell: bash
         run: |
-          curl -Lo ./snyk-to-html \
+          curl -Lo ./snyk-to-html https://github.com/snyk/snyk-to-html/releases/download/v2.3.1/snyk-to-html-linux \
           chmod +x snyk-to-html
           
       - uses: snyk/actions/setup@master
