@@ -47,8 +47,8 @@ jobs:
       - image: cimg/openjdk:11.0
     steps:
       - snyk/scan:
+          monitor-on-build: false
           fail-on-issues: false
-          severity-threshold: high
 
 workflows:
   build-test-snyk:
