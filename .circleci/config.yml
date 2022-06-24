@@ -32,7 +32,7 @@ jobs:
           command: npm install --prefix=$HOME/.local -g snyk
       - run:
           name: Install Snyk to HTML
-          command: npm install -g snyk-to-html
+          command: npm install --prefix=$HOME/.local -g snyk-to-html
       - run:
           name: Snyk Open Source
           command: snyk test --severity-threshold=high || true
