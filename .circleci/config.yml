@@ -1,4 +1,6 @@
 version: 2.1
+orbs: 
+  snyk: snyk/snyk@1.1.2
 
 jobs:
   build-and-test:
@@ -12,7 +14,7 @@ jobs:
       - run:
           name: Test
           command: mvn test
-  snyk:
+  snyk-cli:
     docker:
       - image: cimg/openjdk:11.0-node
     steps:
@@ -40,9 +42,17 @@ jobs:
       - run:
           name: Snyk IaC
           command: snyk iac test --severity-threshold=high || true
+  snyk-pipe:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - snyk/scan:
+          fail-on-issues: false
+          severity-threshold: high
 
 workflows:
   build-test-snyk:
     jobs:
       - build-and-test
-      - snyk
+      - snyk-cli
+      - snyk-pipe
