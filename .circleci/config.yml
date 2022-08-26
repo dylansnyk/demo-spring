@@ -9,11 +9,11 @@ jobs:
     steps:
       - checkout
       - run: mvn install
-      - snyk/scan
+      - snyk/scan:
+          fail-on-issues: false
+          monitor-on-build: true
 
 workflows:
   build-test-snyk:
     jobs:
-      - snyk-scan:
-          fail-on-issues: false
-          monitor-on-build: true
+      - snyk-scan
