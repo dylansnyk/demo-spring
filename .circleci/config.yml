@@ -9,7 +9,8 @@ jobs:
     steps:
       - checkout
       - run: mvn install
-      - snyk/scan
+      - snyk/scan:
+          monitor-on-build: true
 
 workflows:
   build-test-snyk:
