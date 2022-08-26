@@ -3,62 +3,15 @@ orbs:
   snyk: snyk/snyk@1.1.2
 
 jobs:
-  build-and-test:
+  snyk-scan:
     docker:
       - image: cimg/openjdk:11.0
     steps:
       - checkout
-      - run:
-          name: Build
-          command: mvn -B -DskipTests clean package
-      - run:
-          name: Test
-          command: mvn test
-  snyk-cli:
-    docker:
-      - image: cimg/openjdk:11.0-node
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 20.10.7
-      - run: |
-          node --version
-          java --version
-      - run:
-          name: Build Docker image
-          command: docker build -t dylansnyk/demo-spring:latest -t dylansnyk/demo-spring:$CIRCLE_SHA1 .
-      - run:
-          name: Install Snyk
-          command: npm install --prefix=$HOME/.local -g snyk
-      - run:
-          name: Install Snyk to HTML
-          command: npm install --prefix=$HOME/.local -g snyk-to-html
-      - run:
-          name: Snyk Open Source
-          command: snyk test --severity-threshold=high || true
-      - run:
-          name: Snyk Code
-          command: snyk code test --json | snyk-to-html -o code-results.html
-      - store_artifacts:
-          path: code-results.html
-      - run:
-          name: Snyk Container
-          command: snyk container test --severity-threshold=high dylansnyk/demo-spring:$CIRCLE_SHA1 || true
-      - run:
-          name: Snyk IaC
-          command: snyk iac test --severity-threshold=high || true
-  snyk-pipe:
-    docker:
-      - image: cimg/openjdk:11.0
-    steps:
-      - checkout
-      - snyk/scan:
-          monitor-on-build: false
-          fail-on-issues: false
+      - run: mvn install
+      - snyk/scan
 
 workflows:
   build-test-snyk:
     jobs:
-      - build-and-test
-      - snyk-cli
-      - snyk-pipe
+      - snyk-scan
