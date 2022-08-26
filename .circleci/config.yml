@@ -10,8 +10,8 @@ jobs:
       - checkout
       - run: mvn install
       - snyk/scan:
-          fail-on-issues: false
-          monitor-on-build: true
+          monitor-on-build: false
+          command: monitor 
 
 workflows:
   build-test-snyk:
