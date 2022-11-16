@@ -8,22 +8,9 @@ jobs:
   snyk-code:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      
-      - name: Download snyk-to-html
-        shell: bash
-        run: |
-          curl -Lo ./snyk-to-html https://github.com/snyk/snyk-to-html/releases/download/v2.3.1/snyk-to-html-linux
-          chmod +x snyk-to-html
-          
-      - uses: snyk/actions/setup@master
-      - name: Run Snyk Code to check for vulnerabilities
-        run: snyk code test --sarif | ./snyk-to-html -o results.html
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-          
-      - name: Upload Snyk Code Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: snyk-code-results
-          path: results.html
+    - uses: actions/checkout@master
+    - uses: snyk/actions/setup@master
+    - name: Run Snyk Code
+      run: snyk code test
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

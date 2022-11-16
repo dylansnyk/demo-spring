@@ -1,4 +1,6 @@
 version: 2.1
+orbs: 
+  snyk: snyk/snyk@1.1.2
 
 jobs:
   build-and-test:
@@ -12,7 +14,7 @@ jobs:
       - run:
           name: Test
           command: mvn test
-  snyk:
+  snyk-cli:
     docker:
       - image: cimg/openjdk:11.0-node
     steps:
@@ -29,20 +31,34 @@ jobs:
           name: Install Snyk
           command: npm install --prefix=$HOME/.local -g snyk
       - run:
+          name: Install Snyk to HTML
+          command: npm install --prefix=$HOME/.local -g snyk-to-html
+      - run:
           name: Snyk Open Source
           command: snyk test --severity-threshold=high || true
       - run:
           name: Snyk Code
-          command: snyk code test --severity-threshold=high || true
+          command: snyk code test --json | snyk-to-html -o code-results.html
+      - store_artifacts:
+          path: code-results.html
       - run:
           name: Snyk Container
           command: snyk container test --severity-threshold=high dylansnyk/demo-spring:$CIRCLE_SHA1 || true
       - run:
           name: Snyk IaC
           command: snyk iac test --severity-threshold=high || true
+  snyk-pipe:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - checkout
+      - snyk/scan:
+          monitor-on-build: false
+          fail-on-issues: false
 
 workflows:
   build-test-snyk:
     jobs:
       - build-and-test
-      - snyk
+      - snyk-cli
+      - snyk-pipe
