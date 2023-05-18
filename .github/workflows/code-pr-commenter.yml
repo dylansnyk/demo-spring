@@ -1,0 +1,30 @@
+name: Snyk Code Comment
+on: pull_request
+jobs:
+  snyk-code:
+    name: Snyk Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: snyk/actions/setup@master
+      - name: Snyk Code 
+        run: snyk code test > code-output.md
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        continue-on-error: true
+
+      # Deletes existing comment when there are multiple commmits to same PR
+      - uses: maheshrayas/action-pr-comment-delete@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          org: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          user: 'github-actions[bot]'
+          issue: ${{ github.event.number }}
+
+      - name: comment PR
+        uses: machine-learning-apps/pr-comment@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          path: code-output.md
