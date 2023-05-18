@@ -7,6 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: snyk/actions/setup@master
+      
+      # Run Snyk Code
       - name: Snyk Code 
         run: snyk code test > code-output.md
         env:
@@ -22,6 +24,7 @@ jobs:
           user: 'github-actions[bot]'
           issue: ${{ github.event.number }}
 
+      # Create comment with output from Snyk Code
       - name: comment PR
         uses: machine-learning-apps/pr-comment@master
         env:
