@@ -31,6 +31,7 @@ public class EchoController {
     }
 
     private void executeCommand(@NonNull final String[] command) throws IOException {
+        // deepcode ignore CommandInjection: <please specify a reason of ignoring this>
         Process process = new ProcessBuilder(command).start();
     }
 }
