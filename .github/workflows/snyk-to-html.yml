@@ -14,7 +14,7 @@ jobs:
         chmod +x ./snyk-to-html
     - name: Run Snyk Code
       run: |
-        snyk code test --json > code-results.json
+        snyk code test --json-file-output=code-results.json || true
         ./snyk-to-html -i code-results.json -o code-results.html
       continue-on-error: true
       env:
