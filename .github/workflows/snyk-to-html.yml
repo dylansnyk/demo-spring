@@ -1,0 +1,25 @@
+name: Snyk Code
+
+on: push
+
+jobs:
+  snyk-code:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: snyk/actions/setup@master
+    - name: Download snyk-to-html
+      run: |
+        curl -Lo ./snyk-to-html https://github.com/snyk/snyk-to-html/releases/download/v2.3.7/snyk-to-html-linux
+        chmod +x ./snyk-to-html
+    - name: Run Snyk Code
+      run: |
+        snyk code test --json > code-results.json
+        ./snyk-to-html -i code-results.json -o code-results.html
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    - name: Archive results
+      uses: actions/upload-artifact@v3
+      with:
+        name: Snyk_Code_Report
+        path: code-results.html
