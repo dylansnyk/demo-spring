@@ -1,4 +1,4 @@
-name: Snyk Code
+name: Snyk to HTML
 
 on: push
 
