@@ -22,7 +22,7 @@ public class UserController {
     @SneakyThrows
     @GetMapping("/user")
     public UserDto getUser(@RequestParam String username) {
-        logger.debug(String.format("GET /user: %s", username));
+        logger.debug("GET /user: {}", username);
         return UserDto.builder()
                 .username(username)
                 .build();
