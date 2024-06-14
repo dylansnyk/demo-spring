@@ -16,7 +16,7 @@ pipeline {
             # Install Snyk
             curl -Lo snyk https://static.snyk.io/cli/latest/snyk-linux
             chmod +x snyk
-            mv snyk /usr/local/bin
+            sudo mv snyk /usr/local/bin
   
             # Run Snyk
             snyk auth ${SNYK_TOKEN}
