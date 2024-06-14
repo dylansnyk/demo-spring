@@ -16,11 +16,10 @@ pipeline {
             # Install Snyk
             curl -Lo snyk https://static.snyk.io/cli/latest/snyk-linux
             chmod +x snyk
-            sudo mv snyk /usr/local/bin
   
             # Run Snyk
-            snyk auth ${SNYK_TOKEN}
-            snyk container monitor dylansnyk/demo-spring:latest --tags=component=pkg:dylansnyk/demo-spring@main --file=Dockerfile
+            ./snyk auth ${SNYK_TOKEN}
+            ./snyk container monitor dylansnyk/demo-spring:latest --tags=component=pkg:dylansnyk/demo-spring@main --file=Dockerfile
           '''
         }
       }
