@@ -12,15 +12,15 @@ pipeline {
     stage('Install and Run Snyk') {
       steps {
         withCredentials([string(credentialsId: 'snyk-insights-api-token', variable: 'SNYK_TOKEN')]) {
-          script {
-            // Install Snyk
+          sh '''
+            # Install Snyk
             curl -Lo snyk https://static.snyk.io/cli/latest/snyk-linux
             chmod +x snyk
   
-            // Run Snyk
+            # Run Snyk
             snyk auth ${SNYK_TOKEN}
             snyk container monitor dylansnyk/demo-spring:latest --tags=component=pkg:dylansnyk/demo-spring@main --file=Dockerfile
-          }
+          '''
         }
       }
     }
