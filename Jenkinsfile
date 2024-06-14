@@ -19,7 +19,7 @@ pipeline {
   
             # Run Snyk
             ./snyk auth ${SNYK_TOKEN}
-            ./snyk container monitor dylansnyk/demo-spring:latest --tags="component=pkg:dylansnyk/demo-spring@main" --file=Dockerfile --set tlsRejectUnauthorized="0" -d
+            ./snyk container monitor dylansnyk/demo-spring:latest --tags="component=pkg:dylansnyk/demo-spring@main" --file=Dockerfile
           '''
         }
       }
