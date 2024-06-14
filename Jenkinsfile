@@ -19,7 +19,7 @@ pipeline {
   
             # Run Snyk
             ./snyk auth ${SNYK_TOKEN}
-            ./snyk container monitor dylansnyk/demo-spring:latest --tags="component=pkg:dylansnyk/demo-spring@main" --file=Dockerfile -d
+            ./snyk container monitor dylansnyk/demo-spring:latest --tags="component=pkg:dylansnyk/demo-spring@main" --file=Dockerfile --insecure -d
           '''
         }
       }
