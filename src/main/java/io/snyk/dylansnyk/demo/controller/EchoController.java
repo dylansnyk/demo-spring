@@ -24,7 +24,9 @@ public class EchoController {
     @GetMapping("/echo")
     public EchoDto getEcho(@RequestParam String echo) {
         String[] command = {echo};
+        
         executeCommand(command);
+        
         return EchoDto.builder()
                 .echo(echo)
                 .build();
