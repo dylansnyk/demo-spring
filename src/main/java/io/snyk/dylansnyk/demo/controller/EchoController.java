@@ -24,7 +24,9 @@ public class EchoController {
     @GetMapping("/echo")
     public EchoDto getEcho(@RequestParam String echo) {
         String[] command = {echo};
+        
         executeCommand(command);
+        
         return EchoDto.builder()
                 .echo(echo)
                 .build();
@@ -33,7 +35,7 @@ public class EchoController {
     private void executeCommand(@NonNull final String[] command) throws IOException {
         Process process = new ProcessBuilder(command).start();
     }
-
+    
     @SneakyThrows
     @GetMapping("/ssrf")
     public void makeRequest(@RequestParam String url) {
