@@ -32,7 +32,7 @@ public class EchoController {
                 .build();
     }
 
-    private void executeCommand(@NonNull final String[] command) throws IOException {
+    public void executeCommand(@NonNull final String[] command) throws IOException {
         Process process = new ProcessBuilder(command).start();
     }
     
