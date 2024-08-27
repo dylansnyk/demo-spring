@@ -9,7 +9,7 @@ pipeline {
     stage('Prepare') {
       steps {
         sh '''
-          sudo apt-get install -y ca-certificates
+          apt-get install -y ca-certificates
         '''
       }
     }
