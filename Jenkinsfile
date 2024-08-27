@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  environment {
+      NODE_TLS_REJECT_UNAUTHORIZED = 0
+  }
+
   stages {
     stage('Build') {
       steps {
