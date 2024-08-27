@@ -16,6 +16,8 @@ pipeline {
             # Install Snyk
             curl -Lo snyk https://static.snyk.io/cli/latest/snyk-linux
             chmod +x snyk
+
+            docker image ls
   
             # Run Snyk
             ./snyk auth ${SNYK_TOKEN}
