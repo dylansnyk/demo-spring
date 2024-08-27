@@ -17,6 +17,8 @@ pipeline {
             curl -Lo snyk https://static.snyk.io/cli/latest/snyk-linux
             chmod +x snyk
 
+            env
+            
             docker image ls
   
             # Run Snyk
