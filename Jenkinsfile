@@ -6,6 +6,13 @@ pipeline {
   }
 
   stages {
+    stage('Prepare') {
+      steps {
+        sh '''
+          apt-get install -y ca-certificates
+        '''
+      }
+    }
     stage('Build') {
       steps {
         script {
