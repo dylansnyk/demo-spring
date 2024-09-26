@@ -29,6 +29,19 @@ public class EchoController {
                 .echo(echo)
                 .build();
     }
+    
+    @SneakyThrows
+    @GetMapping("/ssrf")
+    public void makeRequest(@RequestParam String url) {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(System.out::println)
+                .join();
+    }
 
     public void executeCommand(@NonNull final String[] command) throws IOException {
         Process process = new ProcessBuilder(command).start();
