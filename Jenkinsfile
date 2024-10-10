@@ -10,7 +10,7 @@ pipeline {
                     monitorProjectOnBuild: false,
                     snykInstallation: 'snyk@latest',
                     snykTokenId: 'dylans-demo-org-token',
-                    additionalArguments: '--code --json-file-output=sca.json'
+                    additionalArguments: '--json-file-output=sca.json'
                 )
             }
         }
@@ -24,6 +24,16 @@ pipeline {
                     snykTokenId: 'dylans-demo-org-token',
                     additionalArguments: '--code --json-file-output=sast.json'
                 )
+            }
+        }
+
+        stage('Post scan validation') {
+            steps {
+                sh '''
+                    SCA_COUNT=$(cat sca.json | jq '.uniqueCount')
+                    echo "There are $SCA_COUNT unique vulnerabilities. The limit is 10."
+                    [ $SCA_COUNT -lt 10 ]
+                '''
             }
         }
     }
