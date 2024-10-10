@@ -8,7 +8,7 @@ pipeline {
                 snykSecurity(
                     failOnIssues: false,
                     monitorProjectOnBuild: false,
-                    snykInstallation: 'snyk-plugin',
+                    snykInstallation: 'snyk@latest',
                     snykTokenId: 'dylans-demo-org-token'
                 )
             }
@@ -19,7 +19,7 @@ pipeline {
                 snykSecurity(
                     failOnIssues: false,
                     monitorProjectOnBuild: false,
-                    snykInstallation: 'snyk-plugin',
+                    snykInstallation: 'snyk@latest',
                     additionalArguments: '--code',
                     snykTokenId: 'dylans-demo-org-token'
                 )
