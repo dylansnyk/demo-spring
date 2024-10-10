@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        SNYK_TOKEN = credentials('dylans-demo-org-token')
-    }
-
     stages {
         
         stage('Run Snyk Open Source') {
@@ -12,7 +8,8 @@ pipeline {
                 snykSecurity(
                     failOnIssues: false,
                     monitorProjectOnBuild: false,
-                    snykInstallation: 'snyk-plugin'
+                    snykInstallation: 'snyk-plugin',
+                    snykTokenId: 'dylans-demo-org-token'
                 )
             }
         }
@@ -23,7 +20,8 @@ pipeline {
                     failOnIssues: false,
                     monitorProjectOnBuild: false,
                     snykInstallation: 'snyk-plugin',
-                    additionalArguments: '--code'
+                    additionalArguments: '--code',
+                    snykTokenId: 'dylans-demo-org-token'
                 )
             }
         }
