@@ -9,8 +9,8 @@ pipeline {
                     failOnIssues: false,
                     monitorProjectOnBuild: false,
                     snykInstallation: 'snyk@latest',
-                    snykTokenId: 'dylans-demo-org-token'
-                    additionalArguments: '--code --json-file-output=sca.json',
+                    snykTokenId: 'dylans-demo-org-token',
+                    additionalArguments: '--code --json-file-output=sca.json'
                 )
             }
         }
@@ -21,7 +21,7 @@ pipeline {
                     failOnIssues: false,
                     monitorProjectOnBuild: false,
                     snykInstallation: 'snyk@latest',
-                    snykTokenId: 'dylans-demo-org-token'
+                    snykTokenId: 'dylans-demo-org-token',
                     additionalArguments: '--code --json-file-output=sast.json'
                 )
             }
