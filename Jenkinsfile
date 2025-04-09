@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  environment {
+      NODE_TLS_REJECT_UNAUTHORIZED = 0
+  }
+
   stages {
     stage('Build') {
       steps {
@@ -16,10 +20,14 @@ pipeline {
             # Install Snyk
             curl -Lo snyk https://static.snyk.io/cli/latest/snyk-linux
             chmod +x snyk
+
+            env
+            
+            docker image ls
   
             # Run Snyk
             ./snyk auth ${SNYK_TOKEN}
-            ./snyk container monitor dylansnyk/demo-spring:latest --tags="component=pkg:dylansnyk/demo-spring@main" --file=Dockerfile
+            ./snyk container monitor dylansnyk/demo-spring:latest --tags="component=pkg:dylansnyk/demo-spring@main" --file=Dockerfile -d
           '''
         }
       }
